@@ -81,6 +81,7 @@
 <?php endif; ?>
 
 <a href="Index.php?accion=nuevo" class="btn btn-nuevo">+ Nuevo Colaborador</a>
+<a href="Index.php?accion=exportar" class="btn btn-editar">⬇ Exportar Excel</a>
 
 <?php if (empty($colaboradores)): ?>
     <div class="sin-datos">
@@ -109,7 +110,6 @@
                     <td><?= htmlspecialchars($colab['email'] ?? '') ?></td>
                     <td><?= htmlspecialchars($colab['celular'] ?? '') ?></td>
                     <td>
-                        <a href="Index.php?accion=editar&id=<?= $colab['id'] ?>" class="btn btn-editar">Editar</a>
                         <a href="Index.php?accion=eliminar&id=<?= $colab['id'] ?>" class="btn btn-eliminar" onclick="return confirm('¿Está seguro?')">Eliminar</a>
                     </td>
                 </tr>

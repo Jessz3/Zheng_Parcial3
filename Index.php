@@ -21,6 +21,10 @@ try {
             $controller->guardar();
             break;
 
+        case "exportar":
+            $controller->exportarExcel();
+            break;
+
         case "listar":
         default:
             $colaboradores = $controller->listar();
