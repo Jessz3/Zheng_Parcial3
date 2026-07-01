@@ -81,7 +81,14 @@
 <?php endif; ?>
 
 <a href="Index.php?accion=nuevo" class="btn btn-nuevo">+ Nuevo Colaborador</a>
+<a href="Index.php?accion=perfil_nuevo" class="btn btn-editar">+ Nuevo Perfil Laboral</a>
 <a href="Index.php?accion=exportar" class="btn btn-editar">⬇ Exportar Excel</a>
+
+<?php if (isset($_GET['msg']) && $_GET['msg'] == 'perfil_ok'): ?>
+    <div class="mensaje mensaje-exito">
+        ✓ Perfil laboral guardado exitosamente
+    </div>
+<?php endif; ?>
 
 <?php if (empty($colaboradores)): ?>
     <div class="sin-datos">

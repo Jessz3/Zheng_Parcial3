@@ -12,9 +12,13 @@ class CatalogoModel
     public function getSexo()
     {
         try {
-            return $this->db->query("SELECT * FROM ` cat_sexo` ORDER BY id ASC")->fetchAll(PDO::FETCH_ASSOC);
+            return $this->db->query("SELECT * FROM `cat_sexo` ORDER BY id ASC")->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            return [];
+            try {
+                return $this->db->query("SELECT * FROM ` cat_sexo` ORDER BY id ASC")->fetchAll(PDO::FETCH_ASSOC);
+            } catch (PDOException $e) {
+                return [];
+            }
         }
     }
 
@@ -72,6 +76,17 @@ class CatalogoModel
         try {
             return $this->db
                 ->query("SELECT * FROM `cat_tipoempleado` WHERE Activo = 1 ORDER BY Nombre ASC")
+                ->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+    public function getPlanillas()
+    {
+        try {
+            return $this->db
+                ->query("SELECT id, Nombre FROM `cat_tipo_planilla` WHERE Activo = 1 ORDER BY id ASC")
                 ->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             return [];
