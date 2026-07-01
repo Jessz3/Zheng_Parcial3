@@ -104,7 +104,6 @@
                 <th>Apellido</th>
                 <th>Email</th>
                 <th>Celular</th>
-                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -116,9 +115,6 @@
                     <td><?= htmlspecialchars($colab['apellido'] ?? '') ?></td>
                     <td><?= htmlspecialchars($colab['email'] ?? '') ?></td>
                     <td><?= htmlspecialchars($colab['celular'] ?? '') ?></td>
-                    <td>
-                        <a href="Index.php?accion=eliminar&id=<?= $colab['id'] ?>" class="btn btn-eliminar" onclick="return confirm('¿Está seguro?')">Eliminar</a>
-                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
