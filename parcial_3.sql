@@ -1,3 +1,28 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.3
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1:3306
+-- Tiempo de generación: 01-07-2026 a las 17:32:25
+-- Versión del servidor: 8.4.7
+-- Versión de PHP: 8.3.28
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `parcial_3`
+--
+
+-- --------------------------------------------------------
+
 --
 -- Estructura de tabla para la tabla `cat_estadocivil`
 --
@@ -812,32 +837,96 @@ INSERT INTO `cat_tipoempleado` (`id`, `Nombre`, `Activo`, `Abreviatura`) VALUES
 (6, 'Práctica Profesional', 1, 'X'),
 (7, 'Permanente', 1, 'P'),
 (8, 'Interino', 1, 'I');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `cat_tiposangre`
+--
+
+DROP TABLE IF EXISTS `cat_tiposangre`;
+CREATE TABLE IF NOT EXISTS `cat_tiposangre` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `Nombre` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `cat_tiposangre`
+--
+
+INSERT INTO `cat_tiposangre` (`id`, `Nombre`) VALUES
+(1, 'O+ '),
+(2, 'O-'),
+(3, 'A-'),
+(4, 'A+'),
+(5, 'B -'),
+(6, 'B+'),
+(7, 'AB-'),
+(8, 'AB+');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `colaboradores`
+--
+
+DROP TABLE IF EXISTS `colaboradores`;
+CREATE TABLE IF NOT EXISTS `colaboradores` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `identidad` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nombre` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `apellido` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `edad` int DEFAULT NULL,
+  `sexo_id` int DEFAULT NULL,
+  `tipo_sangre_id` int DEFAULT NULL,
+  `estado_civil_id` int DEFAULT NULL,
+  `nacionalidad` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ruta_id` int DEFAULT NULL,
+  `email` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `celular` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ocupacion_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_col_sexo` (`sexo_id`),
+  KEY `fk_col_sangre` (`tipo_sangre_id`),
+  KEY `fk_col_ruta` (`ruta_id`),
+  KEY `fk_col_estado_civil` (`estado_civil_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `colaboradores`
+--
+
+INSERT INTO `colaboradores` (`id`, `identidad`, `nombre`, `apellido`, `edad`, `sexo_id`, `tipo_sangre_id`, `estado_civil_id`, `nacionalidad`, `ruta_id`, `email`, `celular`, `ocupacion_id`) VALUES
+(1, '1-2345-563', 'Jessica', 'Prueba', 48, 3, 2, 3, 'Panameña', 2, 'prueba@gmail.com', '45678946', 13),
+(2, '123456897', 'Prueba', 'Prueba', 18, 2, 2, 2, 'Panameña', 1, 'mfekfe@gmail.com', '4556789', 11),
+(3, '1-2345-564', 'Prueba', 'Ffrgr', 56, 2, 4, 2, 'Panameña', 1, 'fefe@gmail.com', '65473258', 822),
+(4, '8-1033-370', 'Jessica', 'Zheng', 20, 3, 1, 2, 'Panameña', 4, 'jessica@gmail.com', '12345678', 9);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `perfiles_laborales`
+--
+
+DROP TABLE IF EXISTS `perfiles_laborales`;
+CREATE TABLE IF NOT EXISTS `perfiles_laborales` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `colaborador_id` int DEFAULT NULL,
+  `ocupacion_id` int DEFAULT NULL,
+  `tipo_empleado_id` int DEFAULT NULL,
+  `salario` decimal(10,2) DEFAULT NULL,
+  `fecha_inicio` date DEFAULT NULL,
+  `fecha_fin` date DEFAULT NULL,
+  `es_activo` tinyint(1) DEFAULT NULL,
+  `empleado_activo` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_perf_col` (`colaborador_id`),
+  KEY `fk_perf_ocup` (`ocupacion_id`),
+  KEY `fk_perf_tipo_emp` (`tipo_empleado_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 COMMIT;
 
-ALTER TABLE colaboradores
-ADD CONSTRAINT fk_col_sexo
-FOREIGN KEY (sexo_id) REFERENCES cat_sexo(id);
-
-ALTER TABLE colaboradores
-ADD CONSTRAINT fk_col_sangre
-FOREIGN KEY (tipo_sangre_id) REFERENCES cat_tiposangre(id);
-
-ALTER TABLE colaboradores
-ADD CONSTRAINT fk_col_ruta
-FOREIGN KEY (ruta_id) REFERENCES cat_rutas(id);
-
-ALTER TABLE colaboradores
-ADD CONSTRAINT fk_col_estado_civil
-FOREIGN KEY (estado_civil_id) REFERENCES cat_estadocivil(id);
-
-ALTER TABLE perfiles_laborales
-ADD CONSTRAINT fk_perf_col
-FOREIGN KEY (colaborador_id) REFERENCES colaboradores(id);
-
-ALTER TABLE perfiles_laborales
-ADD CONSTRAINT fk_perf_ocup
-FOREIGN KEY (ocupacion_id) REFERENCES cat_ocupaciones(C_OCUP);
-
-ALTER TABLE perfiles_laborales
-ADD CONSTRAINT fk_perf_tipo_emp
-FOREIGN KEY (tipo_empleado_id) REFERENCES cat_tipoempleado(id);
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
